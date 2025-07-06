@@ -18,6 +18,8 @@ This is a simple backend web application built with Node.js, Express, and EJS th
     npm install
     ```
 
+    for just information for my future self, it uses axios, ejs and express
+
 3. **Run the application**
     ```bash
     node app.js
