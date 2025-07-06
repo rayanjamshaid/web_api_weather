@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weather Forecast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Weather Forecast</h1>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } else if (!weatherData) { %>
+    <p>No weather data available.</p>
+  <% } else { %>
+
+    <!-- Location Info -->
+    <h2>Location</h2>
+    <p><strong>Latitude:</strong> <%= weatherData.latitude %></p>
+    <p><strong>Longitude:</strong> <%= weatherData.longitude %></p>
+    <p><strong>Timezone:</strong> <%= weatherData.timezone %> (<%= weatherData.timezone_abbreviation %>)</p>
+
+    <!-- Current Weather -->
+    <h2>Current Weather</h2>
+    <p><strong>Time:</strong> <%= weatherData.current.time %></p>
+    <p><strong>Temperature:</strong> <%= weatherData.current.temperature_2m %> <%= weatherData.current_units.temperature_2m %></p>
+
+    <!-- Daily Forecast -->
+    <h2>7-Day Forecast</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Max Temp (<%= weatherData.daily_units.temperature_2m_max %>)</th>
+          <th>Min Temp (<%= weatherData.daily_units.temperature_2m_min %>)</th>
+          <th>Weather Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% 
+          // Loop through each day by index
+          for (let i = 0; i < weatherData.daily.time.length; i++) { 
+        %>
+          <tr>
+            <td><%= weatherData.daily.time[i] %></td>
+            <td><%= weatherData.daily.temperature_2m_max[i] %></td>
+            <td><%= weatherData.daily.temperature_2m_min[i] %></td>
+            <td><%= weatherData.daily.weathercode[i] %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+  <% } %>
+
+</body>
+</html>
